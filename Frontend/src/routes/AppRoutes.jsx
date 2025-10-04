@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 // Layouts
 import HrLayoutDashboard from "../Components/Layout/CompanyLayout";
 import EmployeeLayoutDashboard from "../Components/Layout/EmployeLayout";
+import EmployeeDashboard from "../Pages/Employee/EmployeeDashboard";
 
 // Auth Pages
-import Login from "../Pages/Login/Login";
+import Login from "../Pages/Auth/Login";
 
 //Not Found Page
 import NotFound from '../Components/NotFound'
@@ -26,28 +27,28 @@ const AppRoutes = () => {
       {/* Employee Routes */}
       {isAuthenticated && role === "employee" && (
         <Route path="/" element={<EmployeeLayoutDashboard />}>
-          <Route path="emhome" element={<Dashboard />} />
-          <Route path="emattendance" element={<Attendance />} />
+          <Route path="emhome" element={<EmployeeDashboard />} />
+          {/* <Route path="emattendance" element={<Attendance />} />
           <Route path="emsalary" element={<Salary />} />
           <Route path="emcalendar" element={<Calendar />} />
           <Route path="attendance" element={<AttendanceNew />} />
           <Route path="emprofile/:id" element={<Emprofile />} />
-          <Route path="emcontect" element={<Contect />} />
+          <Route path="emcontect" element={<Contect />} /> */}
         </Route>
       )}
 
       {/* HR Routes */}
       {isAuthenticated && role === "hr" && (
         <Route path="/" element={<HrLayoutDashboard />}>
-          <Route path="hrhome" element={<HRDashboard />} />
+          {/* <Route path="hrhome" element={<HRDashboard />} />
           <Route path="hremployees" element={<Employees />} />
           <Route path="hraddemployee" element={<AddEmployee />} />
           <Route path="hrpayrollsystem" element={<PayrollSystem />} />
           <Route path="hrcalendar" element={<HRCalendar />} />
           <Route path="hremployees/profile/:id" element={<EmployeeDashboard />} />
-          <Route path="payrollsystem/profile/:id" element={<PayrollPage/>}/>
+          <Route path="payrolxlsystem/profile/:id" element={<PayrollPage/>}/>
           <Route path="hrprofile/:id" element={<Hrprofile />} />
-          <Route path="hrquery" element={<Query />} />
+          <Route path="hrquery" element={<Query />} /> */}
         </Route>
       )}
       {/* <Route path="/:id/set-password" element={<SetPassword />} /> */}
