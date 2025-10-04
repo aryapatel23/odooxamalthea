@@ -1,4 +1,4 @@
-# 💰 Odoo Xamalthea - Expense Management System
+# 💰 Odoo X Amalthea - Expense Management System
 
 **A full-stack expense management application** for tracking employee expenses, approvals, reimbursements, and financial reporting. This system provides separate dashboards for **Finance/Admin** and **Employees**, ensuring smooth expense tracking and reimbursement workflow.
 
@@ -497,6 +497,7 @@ For issues, questions, or contributions:
 **📺 Don't forget to check out the [YouTube Demo](https://youtu.be/WPnxH9x_8gY) for a complete walkthrough!**
 
 *Last updated: October 2025*
+
 
 
 
