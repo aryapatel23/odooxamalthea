@@ -97,7 +97,7 @@ import { useSelector } from "react-redux";
 import { ExpenseProvider } from "../context/ExpenseContext"; // ✅ added
 
 // Layouts
-import HrLayoutDashboard from "../Components/Layout/CompanyLayout";
+import HrLayoutDashboard from "../Components/Layout/AdminLayout";
 import EmployeeLayoutDashboard from "../Components/Layout/EmployeLayout";
 
 // Auth Pages

@@ -58,8 +58,10 @@ const Sidebar = () => {
           {/* Navigation Menu */}
           <nav className="space-y-3">
             {[
-              { label: 'Dashboard', icon: <LayoutDashboard size={18} />, path: '/manager-dashboard' },
-              { label: 'Approvals', icon: <Users size={18} />, path: '/manager-approvals' },
+              { label: 'Dashboard', icon: <LayoutDashboard size={18} />, path: '/admin-dashboard' },
+              { label: 'User Management', icon: <Users size={18} />, path: '/user-management' },
+              { label: 'Workflow Rules', icon: <Users size={18} />, path: '/workflow-rules' },
+              { label: 'Expense Overview', icon: <Users size={18} />, path: '/expense-overview' },
               // { label: 'Add Employee', icon: <UserPlus size={18} />, path: '/hraddemployee' },
               // { label: 'Payroll System', icon: <Wallet size={18} />, path: '/hrpayrollsystem' },
               // { label: 'Calendar', icon: <Calendar size={18} />, path: '/hrcalendar' },
