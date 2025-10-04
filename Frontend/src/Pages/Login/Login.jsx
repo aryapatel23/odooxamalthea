@@ -102,8 +102,10 @@ const Login = () => {
       setTimeout(() => {
         if (role === "employee") {
           navigate("/employ-dashboard");
-        } else if (role === "hr") {
+        } else if (role === "manager") {
           navigate("/manager-dashboard");
+        }else if (role === "admin") {
+          navigate("/admin-dashboard");
         }
       }, 1500); // wait for toast to show
 
