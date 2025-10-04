@@ -18,45 +18,50 @@ const Login = () => {
   }, []);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const userData = { user_id: userId, password, companyId };
+  const userData = { user_id: userId, password, companyId };
 
-    try {
-      const response = await fetch("https://odooxamalthea.onrender.com/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
+  try {
+    const response = await fetch("https://odooxamalthea.onrender.com/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (!response.ok) {
-        toast.error(data.message || "Login failed", { position: "bottom-right" });
-        return;
-      }
-
-      const role = (data?.user?.role || "").toLowerCase();
-
-      // Save in Redux
-      dispatch(loginUser({ user: data.user, token: data.token }));
-
-      // Save token and role
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", role);
-
-      toast.success("Login successful!", { position: "bottom-right" });
-
-      setTimeout(() => {
-        if (role === "employee") navigate("/employ-dashboard");
-        else if (role === "hr") navigate("/hrhome");
-      }, 1500);
-
-    } catch (error) {
-      console.error("Error during login:", error);
-      toast.error("An error occurred while logging in. Please try again.", { position: "bottom-right" });
+    if (!response.ok) {
+      toast.error(data.message || "Login failed", { position: "bottom-right" });
+      return;
     }
-  };
+
+    const role = (data?.user?.role || "").toLowerCase();
+
+    // Save in Redux
+    dispatch(loginUser({ user: data.user, token: data.token }));
+
+    // Save token and role
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", role);
+
+    toast.success("Login successful!", { position: "bottom-right" });
+
+    setTimeout(() => {
+      if (role === "employee") navigate("/employ-dashboard");
+      else if (role === "manager") navigate("/manager-dashboard");
+      else if (role === "admin") navigate("/admin-dashboard");
+      else navigate("/"); // fallback
+    }, 1500);
+
+  } catch (error) {
+    console.error("Error during login:", error);
+    toast.error("An error occurred while logging in. Please try again.", {
+      position: "bottom-right",
+    });
+  }
+};
+
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
