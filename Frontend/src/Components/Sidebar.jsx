@@ -56,9 +56,10 @@ const Sidebar = () => {
           {/* Navigation Menu */}
           <nav className="space-y-3">
             {[
-              { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/emhome" },
-              { label: "My Expenses", icon: <NotepadText size={18} />, path: "/my-expenses" },
+              { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/employ-dashboard" },
+              { label: "My Expenses", icon: <NotepadText size={18} />, path: "/expense-history" },
               { label: "Submit Expense", icon: <PlusCircle size={18} />, path: "/submit-expense" },
+              { label: "OCR Algorithm", icon: <PlusCircle size={18} />, path: "/ocr" },
             ].map(({ label, icon, path }) => (
               <button
                 key={path}
