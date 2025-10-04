@@ -1,49 +1,3 @@
-// import react from 'react';
-// import { useState } from 'react';
-
-// const Login =()=>{
-// const [id, setId] = useState('');
-// const [username, setUsername] = useState('');
-// const [password, setPassword] = useState('');
-//     return(
-//         <>
-//             <div className='flex flex-row  justify-between items-center h-screen '>
-//                 <div className='flex flex-col justify-center items-center w-2/5 h-full'>
-//                <div className='flex justify-start pl-3 pt-3 w-full'>
-//                  <img src="https://res.cloudinary.com/doqzxuxb1/image/upload/v1748249798/Attendance%20And%20Payroll%20Managment/eanj5h57izb4wsvgkzhc.png" alt="" />
-//                </div>
-//              <div className='w-4/5 h-full flex justify-center items-center'>
-//                 <div className='flex flex-col justify-center w-4/5'>
-//                     <h1 className='text-3xl font-bold'>Sign-in</h1>
-//                     <form className='flex flex-col mt-4 w-4/4'>
-//                         <input type="text" placeholder='id*' className='border border-gray-300 p-2 mb-2 rounded' name='id' value={id}   onChange={(e) => setId(e.target.value)} />
-
-//                         <input type="password" placeholder='Username*' className='border border-gray-300 p-2 mb-2 rounded' name='Username' value={username} onChange={(e)=>setUsername(e.target.value)} />
-
-//                         <input type="password" placeholder='Password*' className='border border-gray-300 p-2 mb-2 rounded' name='password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
-
-//                         <button type="submit" className='bg-blue-500 text-white p-2 rounded'>Login</button>
-
-//                     </form>
-//                 </div>               
-//              </div>
-//              <span className='mb-5'>Terms and Condition • Privacy Policy</span>
-//                 </div>
-
-//               <div className=' bg-gray-100 h-full w-3/5 flex justify-center items-center'>
-//              <img src="https://res.cloudinary.com/doqzxuxb1/image/upload/v1748238957/Attendance%20And%20Payroll%20Managment/y45ltl4yfgxsksuetayk.png" alt="Login page" className='' />
-//           </div>
-//           <div>
-            
-//           </div>
-//             </div>
-
-
-//         </>
-//     )
-// };
-// export default Login;
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
@@ -97,13 +51,6 @@ const Login = () => {
         if (role === "employee") navigate("/emhome");
         else if (role === "hr") navigate("/hrhome");
       }, 1500);
-        if (role === "employee") {
-          navigate("/employ-dashboard");
-        } else if (role === "hr") {
-          navigate("/manager-dashboard");
-        }
-      }, 1500); // wait for toast to show
-      
 
     } catch (error) {
       console.error("Error during login:", error);
