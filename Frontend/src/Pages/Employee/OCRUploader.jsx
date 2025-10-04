@@ -74,9 +74,6 @@ const OCRUpload = () => {
       <div className="bg-white rounded-3xl shadow-2xl p-8 w-full border border-gray-100">
         {/* Header */}
         <div className="flex items-center justify-center mb-8">
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-2xl shadow-lg">
-            <Sparkles className="w-8 h-8 text-white" />
-          </div>
           <h2 className="text-3xl font-bold ml-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             OCR Text Extractor
           </h2>
