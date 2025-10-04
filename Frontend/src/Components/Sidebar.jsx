@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../Redux/Slice';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../Redux/Slice";
 import {
-  Users,
-  DollarSign,
-  Calendar,
-  Settings,
-  User,
-  Menu,
-  X,
   LayoutDashboard,
   NotepadText,
-  Phone,
+  PlusCircle,
+  Menu,
+  X,
 } from "lucide-react";
-import { useNavigate, useLocation } from 'react-router-dom';
-
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -23,11 +17,10 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.auth.user);
 
-
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-   dispatch(logoutUser());
+    dispatch(logoutUser());
     navigate("/");
   };
 
@@ -63,23 +56,20 @@ const Sidebar = () => {
           {/* Navigation Menu */}
           <nav className="space-y-3">
             {[
-              { label: 'Dashboard', icon: <LayoutDashboard size={18} />, path: '/emhome' },
-              { label: 'Attendance', icon: <Users size={18} />, path: '/emattendance' },
-              { label: 'Salary', icon: <DollarSign size={18} />, path: '/emsalary' },
-              { label: 'Calendar', icon: <Calendar size={18} />, path: '/emcalendar' },
-              { label: 'Profile', icon: <User size={18} />, path: `/emprofile/${user?.id}` },
-              { label: 'Contect With HR', icon: <Phone  dText  size={18} />, path: '/emcontect' },
+              { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/emhome" },
+              { label: "My Expenses", icon: <NotepadText size={18} />, path: "/my-expenses" },
+              { label: "Submit Expense", icon: <PlusCircle size={18} />, path: "/submit-expense" },
             ].map(({ label, icon, path }) => (
               <button
                 key={path}
                 onClick={() => {
                   navigate(path);
-                  setIsOpen(false); // Close sidebar on mobile after click
+                  setIsOpen(false);
                 }}
                 className={`flex items-center gap-3 p-2 rounded-lg w-full text-left transition ${
                   isActive(path)
-                    ? 'bg-indigo-100 text-indigo-600 font-semibold'
-                    : 'hover:bg-gray-100'
+                    ? "bg-indigo-100 text-indigo-600 font-semibold"
+                    : "hover:bg-gray-100"
                 }`}
               >
                 {icon} <span>{label}</span>
@@ -98,9 +88,6 @@ const Sidebar = () => {
           </button>
         </div>
       </div>
-
-      {/* Dummy content space to push real content to the right on desktop */}
-      {/* <div className="hidden md:block w-64"></div> */}
     </div>
   );
 };
