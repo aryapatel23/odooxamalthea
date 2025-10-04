@@ -48,7 +48,7 @@ const Login = () => {
       toast.success("Login successful!", { position: "bottom-right" });
 
       setTimeout(() => {
-        if (role === "employee") navigate("/emhome");
+        if (role === "employee") navigate("/employ-dashboard");
         else if (role === "hr") navigate("/hrhome");
       }, 1500);
 
