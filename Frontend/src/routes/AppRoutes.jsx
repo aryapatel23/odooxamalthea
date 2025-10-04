@@ -31,6 +31,11 @@ import Dashboard from "../Pages/Employee/EmployeeDashboard";
 // Common / Temp
 // import Add from "../Pages/Add";
 
+//Manager Pages
+import ManagerLayoutDashboard from "../Components/Layout/ManagerLayout";
+import ManagerDashboard from "../Pages/Manager/ManagerDashboard";
+
+
 //Not Found Page
 import NotFound from '../Components/NotFound'
 import SubmitExpenseForm from "../Pages/Employee/SubmitExpenseForm";
@@ -55,6 +60,14 @@ const AppRoutes = () => {
         </Route>
       )}
 
+      {/* Employee Routes */}
+      {isAuthenticated && role === "hr" && (
+        <Route path="/" element={<ManagerLayoutDashboard />}>
+          <Route path="mghome" element={<ManagerDashboard />} />
+          {/* <Route path="my-expenses" element={<MyExpenses />} /> */}
+          <Route path="submit-expense" element={<SubmitExpenseForm />} />
+        </Route>
+      )}
 
       {/* HR Routes
       {isAuthenticated && role === "hr" && (
