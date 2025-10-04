@@ -48,9 +48,16 @@ const Login = () => {
       toast.success("Login successful!", { position: "bottom-right" });
 
       setTimeout(() => {
-        if (role === "employee") navigate("/employ-dashboard");
-        else if (role === "hr") navigate("/hrhome");
-      }, 1500);
+
+        if (role === "employee") {
+          navigate("/employ-dashboard");
+        } else if (role === "manager") {
+          navigate("/manager-dashboard");
+        }else if (role === "admin") {
+          navigate("/admin-dashboard");
+        }
+      }, 1500); // wait for toast to show
+
 
     } catch (error) {
       console.error("Error during login:", error);

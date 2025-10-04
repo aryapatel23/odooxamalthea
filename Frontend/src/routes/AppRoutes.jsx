@@ -121,6 +121,12 @@ import OCR from "../Pages/Employee/OCRUploader";
 import ManagerLayoutDashboard from "../Components/Layout/ManagerLayout";
 import ManagerDashboard from "../Pages/Manager/ManagerDashboard";
 
+//Admin pages
+import WorkflowRules from "../Pages/Admin/WorkflowRules";
+import AdminDashboard from "../Pages/Admin/AdminDashboard";
+import UserManagement from "../Pages/Admin/UserManagement";
+import ExpenseReports from "../Pages/Admin/ExpenseOverview";
+
 // Not Found Page
 import NotFound from '../Components/NotFound';
 // import Contect from "../Pages/Employee/Contect";
@@ -154,10 +160,20 @@ const AppRoutes = () => {
       )}
 
       {/* Manager Routes */}
-      {isAuthenticated && role === "hr" && (
+      {isAuthenticated && role === "manager" && (
         <Route path="/" element={<ManagerLayoutDashboard />}>
           <Route path="manager-dashboard" element={<ManagerDashboard />} />
           {/* <Route path="my-expenses" element={<MyExpenses />} /> */}
+        </Route>
+      )}
+
+      {/* Admin Routes */}
+      {isAuthenticated && role === "admin" && (
+        <Route path="/" element={<HrLayoutDashboard />}>
+          <Route path="admin-dashboard" element={<AdminDashboard />} />
+          <Route path="user-management" element={<UserManagement />} />
+          <Route path="workflow-rules" element={<WorkflowRules />} />
+          <Route path="expense-overview" element={<ExpenseReports />} />
         </Route>
       )}
 
