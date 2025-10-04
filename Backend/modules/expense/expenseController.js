@@ -33,6 +33,7 @@ const addExpense = async (req, res) => {
         user_id,                   // passed from frontend (Redux)
         username
       },
+      status: 'Pending',
       createdAt: new Date()
     };
 
@@ -53,4 +54,31 @@ const addExpense = async (req, res) => {
   }
 };
 
-module.exports = { addExpense };
+const getAllExpenses = async (req, res) => {
+  try {
+    const mainDb = getDB();
+    const client = getClient();
+
+    // ✅ Get companyId from logged-in manager
+const { companyId } = req.body;
+
+    const company = await mainDb.collection('companies').findOne({ companyId });
+    if (!company) return res.status(404).json({ message: 'Company not found' });
+
+    const companyDb = client.db(company.dbName);
+
+    // Optional filter by status
+    const filter = {};
+    if (req.query.status) filter.status = req.query.status;
+
+    const expenses = await companyDb.collection('expenses').find(filter).toArray();
+
+    res.status(200).json({ expenses });
+
+  } catch (error) {
+    console.error('❌ Get all expenses error:', error);
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+module.exports = { addExpense,getAllExpenses };
