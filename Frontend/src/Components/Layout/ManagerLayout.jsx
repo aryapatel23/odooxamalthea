@@ -1,4 +1,4 @@
-import Sidebar from "../companySidebar";
+import Sidebar from "../ManagerSidebar.jsx";
 import Header from "../Header.jsx";
 import { Outlet } from "react-router-dom";
 

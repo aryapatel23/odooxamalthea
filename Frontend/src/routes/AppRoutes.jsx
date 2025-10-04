@@ -129,6 +129,7 @@ import ExpenseReports from "../Pages/Admin/ExpenseOverview";
 
 // Not Found Page
 import NotFound from '../Components/NotFound';
+import ExpenseApprovalPage from "../Pages/Manager/Approvals";
 // import Contect from "../Pages/Employee/Contect";
 
 const AppRoutes = () => {
@@ -163,7 +164,7 @@ const AppRoutes = () => {
       {isAuthenticated && role === "manager" && (
         <Route path="/" element={<ManagerLayoutDashboard />}>
           <Route path="manager-dashboard" element={<ManagerDashboard />} />
-          {/* <Route path="my-expenses" element={<MyExpenses />} /> */}
+          <Route path="manager-approvals" element={<ExpenseApprovalPage />} />
         </Route>
       )}
 

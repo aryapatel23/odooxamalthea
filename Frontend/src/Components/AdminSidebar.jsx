@@ -59,12 +59,12 @@ const Sidebar = () => {
           <nav className="space-y-3">
             {[
               { label: 'Dashboard', icon: <LayoutDashboard size={18} />, path: '/manager-dashboard' },
-              { label: 'Employees', icon: <Users size={18} />, path: '/hremployees' },
-              { label: 'Add Employee', icon: <UserPlus size={18} />, path: '/hraddemployee' },
-              { label: 'Payroll System', icon: <Wallet size={18} />, path: '/hrpayrollsystem' },
-              { label: 'Calendar', icon: <Calendar size={18} />, path: '/hrcalendar' },
-              { label: 'Profile', icon: <User size={18} />, path: `/hrprofile/${user?.id}` },
-              { label: 'Employee Queries', icon: <UserRoundPen  size={18} />, path: '/hrquery' },
+              { label: 'Approvals', icon: <Users size={18} />, path: '/manager-approvals' },
+              // { label: 'Add Employee', icon: <UserPlus size={18} />, path: '/hraddemployee' },
+              // { label: 'Payroll System', icon: <Wallet size={18} />, path: '/hrpayrollsystem' },
+              // { label: 'Calendar', icon: <Calendar size={18} />, path: '/hrcalendar' },
+              // { label: 'Profile', icon: <User size={18} />, path: `/hrprofile/${user?.id}` },
+              // { label: 'Employee Queries', icon: <UserRoundPen  size={18} />, path: '/hrquery' },
             ].map(({ label, icon, path }) => (
               <button
                 key={path}
