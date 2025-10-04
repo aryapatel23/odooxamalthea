@@ -11,7 +11,7 @@
 
 - 🌐 **Live Demo (Frontend):** [Deployment Link](https://expense-manager-ten-lovat.vercel.app/)
 - 🖥️ **Backend API:** [Deployment Link](https://attendance-and-payroll-management.onrender.com)
-- 📹 **Video Demo:** [Watch on YouTube]()
+- 📹 **Video Demo:** [Watch on YouTube](https://youtu.be/WPnxH9x_8gY)
 - 📚 **API Documentation:** [Postman Collection](https://documenter.getpostman.com/view/39216723/2sB3QGuX9y)
 
 
@@ -257,7 +257,7 @@ Frontend will run on `http://localhost:5173`
 
 Complete API documentation is available on Postman:
 
-🔗 **[View API Documentation](#)** *(Add your Postman documentation link)*
+🔗 **[View API Documentation](https://documenter.getpostman.com/view/39216723/2sB3QGuX9y)**
 
 ### **Key API Endpoints:**
 
@@ -316,7 +316,7 @@ npm run build
 netlify deploy --prod --dir=dist
 ```
 
-🔗 **Live Frontend:** [Add your deployment link](#)
+🔗 **Live Frontend:** [Add your deployment link](https://expense-manager-ten-lovat.vercel.app/)
 
 ### **Backend Deployment (Render/Railway)**
 
@@ -328,7 +328,7 @@ netlify deploy --prod --dir=dist
 5. Add environment variables from `.env`
 
 
-🔗 **Live Backend:** [Add your deployment link](#)
+🔗 **Live Backend:** [Add your deployment link](https://attendance-and-payroll-management.onrender.com)
 
 ---
 
@@ -336,7 +336,7 @@ netlify deploy --prod --dir=dist
 
 Watch a complete walkthrough of the application:
 
-🎥 **[Watch Demo on YouTube](#)** *(Add your YouTube video link)*
+🎥 **[Watch Demo on YouTube](https://youtu.be/WPnxH9x_8gY)**
 
 **Demo includes:**
 - User registration and login
@@ -494,7 +494,8 @@ For issues, questions, or contributions:
 
 **⭐ If you find this project useful, please consider giving it a star!**
 
-**📺 Don't forget to check out the [YouTube Demo](#) for a complete walkthrough!**
+**📺 Don't forget to check out the [YouTube Demo](https://youtu.be/WPnxH9x_8gY) for a complete walkthrough!**
 
 *Last updated: October 2025*
+
 
