@@ -5,14 +5,16 @@ const mongoURI = process.env.MONGO_URI;
 const dbName = 'Expense_Management';
 
 let db;
+let client; // store MongoClient globally
 
 const connectToMongoDB = async () => {
-  const client = new MongoClient(mongoURI);
+  client = new MongoClient(mongoURI);
   await client.connect();
   db = client.db(dbName);
   console.log("✅ MongoDB connected");
 };
 
 const getDB = () => db;
+const getClient = () => client; // <-- export client
 
-module.exports = { connectToMongoDB, getDB };
+module.exports = { connectToMongoDB, getDB, getClient };

@@ -1,93 +1,65 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '../auth' });
-const { getDB } = require('../../config/db');
+const { getDB, getClient } = require('../../config/db');
 const bcrypt = require('bcrypt');
-const { ObjectId } = require('mongodb');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
-// ✅ LOGIN CONTROLLER
 const login = async (req, res) => {
-  const db = getDB();
-  const { username, password, id } = req.body;
-
-  if (!username || !password || !id) {
-    return res.status(400).json({ message: 'All fields required' });
-  }
-
-  const user = await db.collection('users').findOne({ username });
-  if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch || user.user_id !== id) {
-    return res.status(401).json({ message: 'Invalid credentials' });
-  }
-
-  // ✅ Generate JWT token
-  const token = jwt.sign(
-    {
-      userId: user._id.toString(),
-      username: user.username,
-      email: user.email,
-      role: user.role,
-    },
-    JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN }
-  );
-
-  res.json({
-    message: '✅ Login successful',
-    token,
-    user: {
-      id: user.user_id,
-      username: user.username,
-      email: user.email,
-      role: user.role.toLowerCase(),
-    },
-  });
-};
-
-// ✅ CHANGE PASSWORD CONTROLLER
-const changePassword = async (req, res) => {
   try {
-    const db = getDB();
-    const { currentPassword, newPassword } = req.body;
-    const userId = req.user?.userId; // comes from JWT
+    const mainDb = getDB();
+    const client = getClient(); // ✅ now client is defined
 
-    if (!currentPassword || !newPassword) {
-      return res.status(400).json({ message: '⚠️ All fields required' });
+    const { user_id, password, companyId } = req.body;
+
+    if (!user_id || !password || !companyId) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
-    console.log("🔍 JWT payload:", req.user);
+    // 1️⃣ Find company in main DB using companyId
+    const company = await mainDb.collection('companies').findOne({ companyId });
+    if (!company) return res.status(404).json({ message: 'Company not found' });
 
-    const objectId = new ObjectId(userId); // ✅ Create ObjectId ONCE
-    const user = await db.collection('users').findOne({ _id: objectId });
+    // 2️⃣ Access the company's DB
+    const companyDb = client.db(company.dbName);
 
-    if (!user) {
-      return res.status(404).json({ message: '❌ User not found' });
-    }
+    // 3️⃣ Find user by user_id in company's DB
+    const user = await companyDb.collection('users').findOne({ user_id });
+    if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
-    // ✅ Check if current password matches
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: '❌ Current password is incorrect' });
-    }
+    // 4️⃣ Verify password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
-    // ✅ Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // ✅ Update password in DB
-    await db.collection('users').updateOne(
-      { _id: objectId },
-      { $set: { password: hashedPassword } }
+    // 5️⃣ Generate JWT
+    const token = jwt.sign(
+      {
+        userId: user._id.toString(),
+        user_id: user.user_id,
+        email: user.email,
+        role: user.role,
+        companyId: user.companyId
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
     );
 
-    res.status(200).json({ message: '✅ Password updated successfully' });
+    res.json({
+      message: '✅ Login successful',
+      token,
+      user: {
+        id: user.user_id,
+        email: user.email,
+        role: user.role.toLowerCase(),
+        companyId: user.companyId
+      }
+    });
+
   } catch (error) {
-    console.error('❌ Password change error:', error);
-    res.status(500).json({ message: '❌ Server error while changing password' });
+    console.error('❌ Login error:', error);
+    res.status(500).json({ message: 'Server error', error });
   }
 };
 
-module.exports = { login, changePassword };
+module.exports = { login };
