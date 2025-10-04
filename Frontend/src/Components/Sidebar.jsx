@@ -7,6 +7,7 @@ import {
   PlusCircle,
   Menu,
   X,
+  ScanLine,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -59,7 +60,7 @@ const Sidebar = () => {
               { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/employ-dashboard" },
               { label: "My Expenses", icon: <NotepadText size={18} />, path: "/expense-history" },
               { label: "Submit Expense", icon: <PlusCircle size={18} />, path: "/submit-expense" },
-              { label: "OCR Algorithm", icon: <PlusCircle size={18} />, path: "/ocr" },
+              { label: "OCR Algorithm", icon: <ScanLine  size={18} />, path: "/ocr" },
             ].map(({ label, icon, path }) => (
               <button
                 key={path}
