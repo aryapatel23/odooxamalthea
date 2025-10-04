@@ -1,162 +1,235 @@
-// // src/components/OCRUploader.jsx
-// import React, { useState } from "react";
-// import Tesseract from "tesseract.js";
-
-// const OCRUploader = () => {
-//   const [image, setImage] = useState(null);
-//   const [text, setText] = useState("");
-//   const [loading, setLoading] = useState(false);
-
-//   const handleFileChange = (e) => {
-//     setImage(URL.createObjectURL(e.target.files[0]));
-//   };
-
-//   const handleUpload = () => {
-//     if (!image) return;
-//     setLoading(true);
-//     Tesseract.recognize(image, "eng", { logger: (m) => console.log(m) })
-//       .then(({ data: { text } }) => setText(text))
-//       .finally(() => setLoading(false));
-//   };
-
-//   return (
-//     <div className="bg-gray-50 min-h-screen flex items-center justify-center p-6">
-//       <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full">
-//         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-//           OCR Upload
-//         </h2>
-
-//         <input
-//           type="file"
-//           accept="image/*"
-//           onChange={handleFileChange}
-//           className="w-full mb-4 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-//         />
-
-//         {image && (
-//           <div className="mb-4">
-//             <img
-//               src={image}
-//               alt="Uploaded Preview"
-//               className="w-full h-48 object-cover rounded-lg shadow-sm"
-//             />
-//           </div>
-//         )}
-
-//         <button
-//           onClick={handleUpload}
-//           className={`w-full text-white font-semibold py-2 rounded-lg transition-colors duration-200 ${
-//             loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-//           }`}
-//           disabled={loading}
-//         >
-//           {loading ? "Processing..." : "Upload & Extract Text"}
-//         </button>
-
-//         {text && (
-//           <div className="bg-gray-50 p-4 mt-6 rounded-lg border border-gray-200 shadow-inner">
-//             <h3 className="font-semibold mb-2 text-gray-700">Extracted Text:</h3>
-//             <p className="text-gray-600 whitespace-pre-line">{text}</p>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default OCRUploader;
-// src/components/OCRUploader.jsx
 import React, { useState } from "react";
 import Tesseract from "tesseract.js";
+import { Upload, FileText, Sparkles, Copy, Check, X } from "lucide-react";
 
-const OCRUploader = () => {
+const OCRUpload = () => {
   const [image, setImage] = useState(null);
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const handleFileChange = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-    setText(""); // clear previous text when new file is uploaded
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      alert("Please upload a valid image file!");
+      return;
+    }
+
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setImage(previewUrl);
+    setText("");
+    setProgress(0);
   };
 
-  const handleUpload = () => {
-    if (!image) return;
-    setLoading(true);
-    setText(""); // clear previous text while processing
-    Tesseract.recognize(image, "eng", { logger: (m) => console.log(m) })
-      .then(({ data: { text } }) => setText(text))
-      .finally(() => setLoading(false));
+  const handleExtractText = async () => {
+    if (!image) {
+      alert("Please upload an image first!");
+      return;
+    }
+
+    setText("Extracting text...");
+    try {
+      const result = await Tesseract.recognize(image, "eng", {
+        logger: (m) => {
+          if (m.status === "recognizing text") {
+            setProgress(Math.round(m.progress * 100));
+          }
+        },
+      });
+
+      setText(result.data.text);
+    } catch (err) {
+      console.error(err);
+      setText("Failed to extract text.");
+    }
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const previewUrl = URL.createObjectURL(file);
+      setImage(previewUrl);
+      setText("");
+      setProgress(0);
+    }
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex items-center justify-center p-6">
-      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-          OCR Upload
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full border border-gray-100">
+        {/* Header */}
+        <div className="flex items-center justify-center mb-8">
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-2xl shadow-lg">
+            <Sparkles className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold ml-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            OCR Text Extractor
+          </h2>
+        </div>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="w-full mb-4 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-
-        {image && (
-          <div className="mb-4">
+        {/* Upload Section or Image Preview */}
+        {!image ? (
+          <div
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            className="border-2 border-dashed border-blue-300 rounded-2xl p-12 mb-6 hover:border-blue-500 transition-all duration-300 bg-gradient-to-br from-blue-50/50 to-indigo-50/50"
+          >
+            <label className="cursor-pointer flex flex-col items-center">
+              <div className="bg-blue-100 p-4 rounded-full mb-4">
+                <Upload className="w-12 h-12 text-blue-600" />
+              </div>
+              <span className="text-gray-800 font-semibold text-lg mb-2">
+                Drop an image or click to upload
+              </span>
+              <span className="text-gray-500 text-sm">
+                Supports JPG, PNG, WEBP
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+          </div>
+        ) : (
+          <div className="relative bg-white border-2 border-gray-200 rounded-2xl mb-6 overflow-hidden shadow-lg group">
             <img
               src={image}
-              alt="Uploaded Preview"
-              className="w-full h-48 object-cover rounded-lg shadow-sm"
+              alt="Preview"
+              className="w-full h-80 object-contain rounded-xl"
+              onError={(e) => {
+                e.target.style.display = "none";
+                alert("Image failed to load. Try another file.");
+              }}
             />
+            <button
+              onClick={() => {
+                setImage(null);
+                setText("");
+                setProgress(0);
+              }}
+              className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
         )}
 
-        <button
-          onClick={handleUpload}
-          className={`w-full flex justify-center items-center gap-2 text-white font-semibold py-2 rounded-lg transition-colors duration-200 ${
-            loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-          }`}
-          disabled={loading}
-        >
-          {loading && (
-            <svg
-              className="animate-spin h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
-              ></path>
-            </svg>
-          )}
-          {loading ? "Processing..." : "Upload & Extract Text"}
-        </button>
-
-        {loading && (
-          <p className="text-center text-gray-500 mt-4">Extracting text, please wait...</p>
+        {/* Progress Bar */}
+        {progress > 0 && progress < 100 && (
+          <div className="mb-6">
+            <div className="flex justify-between mb-2">
+              <span className="text-sm font-medium text-gray-700">
+                Processing...
+              </span>
+              <span className="text-sm font-semibold text-indigo-600">
+                {progress}%
+              </span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+              <div
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full transition-all duration-300 ease-out"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p className="text-center text-gray-500 mt-3 text-sm animate-pulse">
+              Extracting text from your image...
+            </p>
+          </div>
         )}
 
-        {text && !loading && (
-          <div className="bg-gray-50 p-4 mt-6 rounded-lg border border-gray-200 shadow-inner">
-            <h3 className="font-semibold mb-2 text-gray-700">Extracted Text:</h3>
-            <p className="text-gray-600 whitespace-pre-line">{text}</p>
+        {/* Extract Button */}
+        <button
+          onClick={handleExtractText}
+          disabled={!image}
+          className={`w-full flex justify-center items-center gap-3 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg ${
+            !image
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl transform hover:scale-[1.02]"
+          }`}
+        >
+          <FileText className="w-5 h-5" />
+          Extract Text
+        </button>
+
+        {/* Output */}
+        {text && text !== "Extracting text..." && (
+          <div className="mt-8 animate-fadeIn">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <div className="bg-indigo-100 p-2 rounded-lg">
+                  <FileText className="w-5 h-5 text-indigo-600" />
+                </div>
+                Extracted Text
+              </h3>
+              {text !== "Failed to extract text." && (
+                <button
+                  onClick={handleCopy}
+                  className="flex items-center gap-2 px-4 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      Copy
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-2xl p-6 shadow-inner max-h-96 overflow-y-auto">
+              <p className="text-gray-800 leading-relaxed whitespace-pre-wrap break-words">
+                {text}
+              </p>
+            </div>
+            {text !== "Failed to extract text." && (
+              <div className="mt-3 text-right">
+                <span className="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-lg inline-block">
+                  {text.split(/\s+/).length} words · {text.length} characters
+                </span>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   );
 };
 
-export default OCRUploader;
+export default OCRUpload;
