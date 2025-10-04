@@ -101,9 +101,9 @@ const Login = () => {
       // ✅ Navigate after login
       setTimeout(() => {
         if (role === "employee") {
-          navigate("/emhome");
+          navigate("/employ-dashboard");
         } else if (role === "hr") {
-          navigate("/hrhome");
+          navigate("/manager-dashboard");
         }
       }, 1500); // wait for toast to show
 
