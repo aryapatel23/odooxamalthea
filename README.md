@@ -316,7 +316,7 @@ npm run build
 netlify deploy --prod --dir=dist
 ```
 
-🔗 **Live Frontend:** [Add your deployment link](https://expense-manager-ten-lovat.vercel.app/)
+🔗 **Live Frontend:** [Expense Management Frontend](https://expense-manager-ten-lovat.vercel.app/)
 
 ### **Backend Deployment (Render/Railway)**
 
@@ -328,7 +328,7 @@ netlify deploy --prod --dir=dist
 5. Add environment variables from `.env`
 
 
-🔗 **Live Backend:** [Add your deployment link](https://attendance-and-payroll-management.onrender.com)
+🔗 **Live Backend:** [Expense Managment Backend](https://attendance-and-payroll-management.onrender.com)
 
 ---
 
@@ -497,5 +497,6 @@ For issues, questions, or contributions:
 **📺 Don't forget to check out the [YouTube Demo](https://youtu.be/WPnxH9x_8gY) for a complete walkthrough!**
 
 *Last updated: October 2025*
+
 
 
