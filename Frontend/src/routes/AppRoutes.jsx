@@ -21,7 +21,7 @@ import Login from "../Pages/Login/Login";
 // import Query from "../Pages/Admin/Query";
 
 // Employee Pages
-import Dashboard from "../Pages/Employee/EmployeDashboard";
+import Dashboard from "../Pages/Employee/EmployeeDashboard";
 // import Attendance from "../Pages/Employee/Attendance";
 // import Salary from "../Pages/Employee/Salary";
 // import Calendar from "../Pages/Employee/Calendar";
