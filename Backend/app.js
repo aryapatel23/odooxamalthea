@@ -6,6 +6,7 @@ const authRoutes = require('./modules/auth/authRoutes');
 const companiesRoutes = require('./modules/companies/companiesRoutes');
 const usersRoutes = require('./modules/users/userRoutes');
 const superadminRoutes = require('./modules/superadmin/superadminRoutes');
+const expenseRoutes = require('./modules/expense/expenseRoutes');
 const app = express();
 
 // ✅ Configure CORS for React frontend
@@ -26,5 +27,6 @@ app.use('/api', authRoutes);
 app.use('/api', companiesRoutes);
 app.use('/api', usersRoutes);
 app.use('/api', superadminRoutes);
+app.use('/api', expenseRoutes);
 
 module.exports = app;
