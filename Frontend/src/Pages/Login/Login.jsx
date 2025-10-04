@@ -97,6 +97,13 @@ const Login = () => {
         if (role === "employee") navigate("/emhome");
         else if (role === "hr") navigate("/hrhome");
       }, 1500);
+        if (role === "employee") {
+          navigate("/employ-dashboard");
+        } else if (role === "hr") {
+          navigate("/manager-dashboard");
+        }
+      }, 1500); // wait for toast to show
+      
 
     } catch (error) {
       console.error("Error during login:", error);
