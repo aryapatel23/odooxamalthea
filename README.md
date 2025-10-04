@@ -9,10 +9,11 @@
 
 ## 🔗 Quick Links
 
-- 🌐 **Live Demo (Frontend):** [Deployment Link](#) *(Add your Vercel/Netlify link)*
-- 🖥️ **Backend API:** [Deployment Link](#) *(Add your Render/Railway link)*
-- 📹 **Video Demo:** [Watch on YouTube](#) *(Add your YouTube video link)*
-- 📚 **API Documentation:** [Postman Collection](#) *(Add your Postman documentation link)*
+- 🌐 **Live Demo (Frontend):** [Deployment Link](https://expense-manager-ten-lovat.vercel.app/)
+- 🖥️ **Backend API:** [Deployment Link](https://attendance-and-payroll-management.onrender.com)
+- 📹 **Video Demo:** [Watch on YouTube]()
+- 📚 **API Documentation:** [Postman Collection](https://documenter.getpostman.com/view/39216723/2sB3QGuX9y)
+
 
 ---
 
@@ -496,3 +497,4 @@ For issues, questions, or contributions:
 **📺 Don't forget to check out the [YouTube Demo](#) for a complete walkthrough!**
 
 *Last updated: October 2025*
+
